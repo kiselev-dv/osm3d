@@ -88,6 +88,8 @@ But Feature geometry is described by some explicit geometry class or type. Like
 * `way`  // This is a LineString in wkt notation, but named as `way` to match OSM terminology 
 * `node` // This is a Point in wkt notation, but named as `node` to match OSM terminology
 
+### Generative geometry
+
 This is a draft list, for the first version of this specification I would use some of well described 3d geometry subbset.
 
 It's also might be usefull to specify some generative geometry types here.
