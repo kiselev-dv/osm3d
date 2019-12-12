@@ -41,15 +41,58 @@ To do so,
 
 ## Structure
 
-### Root element
+Document should describe a bounding volume, and different LODs groups/objects:
 
-```xml
-<OSM3d>
- <!--- Versions support the same optimistic lock synchronization as OSM elements --->
- <version></version>
-</OSM3d>
-```
+* root
+  * LOD 1
+  * LOD 2
+  * LOD 3
+  * Relation 1
+  * Relation 2
 
+The exact meaning of different levels are subject to discuss as well as should we associate some exact values like geometric error or pixel size, with different levels, or should we describe it explicitly for each `LOD` object in a document.
+
+While this document in a draft state, it's also possible not to include Features into LOD objects but instead reference LOD level for Features or geometry.
+
+Relations implements the same idea as OSM relations. Without roles assigned to members - it's just a group or collection of `Features`, with tags describing semantic of that *relation*. Memmbers might have a role in relation, the same way as a members of osm relations.
+
+Relations can include other *relations* as a *memmbers* under some *role* or without a *role*.
+
+We might want to keep relations at the root level, because we might want to connect object on a different LOD levels in one relation.
+
+The main meaningfull object is `Feature` which consists of `geometry`, and a set `tags`.
+
+* LOD 1
+  * Feature 1
+  * Feature 2
+    * tags
+    * geometry
+  * Relation 1
+  * Relation 2
+  
+Features can be parented to eachother, so the transformations applyed to parent Feature applied to children as well. 
+This is usefull for geometries so you can move/show/hide them all together, but this should not be interpreted as Object Oriented inheritance [1].
+
+Feature type and properties are determined by *tags*. Tag combinations and their meaning are developed by community.
+
+## Geometry
+
+The type of the Feature and it's attributes are determined by it's tags or relations memmbership. 
+But Feature geometry is described by some explicit geometry class or type. Like 
+
+* `mesh`
+* `extrusion`
+* `loft`
+* `boolean`
+* `box`
+* `way`  // This is a LineString in wkt notation, but named as `way` to match OSM terminology 
+* `node` // This is a Point in wkt notation, but named as `node` to match OSM terminology
+
+This is a draft list, for the first version of this specification I would use some of well described 3d geometry subbset.
+
+It's also might be usefull to specify some generative geometry types here.
+
+By generative geometries here considered geometries described as a set of rules to generate the geometry, not as a static vertices and faces oppose to Mesh. Loft and array are good examples of such concept. 
 
 ## Encoding
 
@@ -74,3 +117,6 @@ Examples uses xml, but data objects might be encoded in any other format, the da
 ## Comparison with Collada
 
 ## Comparison with BIM
+
+# References
+[1](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming))
