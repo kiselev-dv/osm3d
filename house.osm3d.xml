@@ -1,4 +1,123 @@
 <osm3d>
-  <lod0>
-  </lod0>
+  <!-- Allow tags describing the object as whole -->
+  <tag k="building" v="house">
+  <tag k="building:levels" v="2">
+
+  <!-- This section defines model scale, and it's  -->
+  <transformation>
+
+  </transformation>
+
+  <materials>
+    <!--
+      Let's allow the use of some common materials.
+      Assuming that community will create it.
+     -->
+    <standart-mtl-lib/>
+
+  </materials>
+
+  <!-- Let's encode a small two storey, pitched roof house
+
+                                    X v10
+                                 X / X
+                              X       X
+                            X          X
+                         X      /       X
+                    v9 X                 X
+                     X                    X
+                    X X     /              X
+                   X   X  v8 -  -  -  -  -  + v7
+                  X     X  |             X  |
+                 X       X             X    |
+                X    /    X          X      |
+               X           X       X        |
+              X             X    X          |
+             X /             X X            |
+         v5 +*****************+ v6          |
+            |                 |             |
+            |              |  |             |
+            |             v4 -|  -  -  -  - + v3
+            |            /    |           X
+            |                 |         X
+            |                 |       X
+            |      /          |     X
+            |                 |   X
+            | /               | X
+            +*****************+
+            v1                v2
+  -->
+
+  <!--
+    All vertices have unique ids, to be able to
+    - reference them from relations
+    - identify faces and edges
+    - add tags to nodes without doubling
+
+    Vertices section is required, and required not empty.
+
+    Meshes of a different lod might share the same vertices
+    that's why they are outside lod object
+  -->
+  <Vertices>
+    <vtx id="1"><ps>0.0, 0.0, 0.0<ps><vtx>
+    <vtx id="2"><ps>10.0, 0.0, 0.0<ps><vtx>
+    <vtx id="3"><ps>10.0, 10.0, 0.0<ps><vtx>
+    <vtx id="4"><ps>0.0, 10.0, 0.0<ps><vtx>
+
+    <vtx id="5"><ps>0.0, 0.0, 5.0<ps><vtx>
+    <vtx id="6"><ps>10.0, 0.0, 5.0<ps><vtx>
+    <vtx id="7"><ps>10.0, 10.0, 5.0<ps><vtx>
+    <vtx id="8"><ps>0.0, 10.0, 5.0<ps><vtx>
+
+    <vtx id="9"><ps>5.0, 0.0, 8.0<ps><vtx>
+    <vtx id="10"><ps>5.0, 10.0, 8.0<ps><vtx>
+  </Vertices>
+
+  <lod lvl="0">
+    <!-- Lod 0 should be a low poly model -->
+    <Mesh>
+      <!-- Define material for whole mesh -->
+      <material><!-- Material or link to material lib--></material>
+
+      <face id="1">
+        <tag k="building:facade" v="front" />
+        <!--
+          That describes semantics,
+          not the 3d model material, but might be used as
+          a fallback if material in model isn't assigned by
+          implementation.
+        -->
+        <tag k="facade:material" v="siding" />
+
+        <!-- Id's of vertices in CCW order -->
+        <vertices>1, 5, 6, 2</vertices>
+
+        <!-- Face normal -->
+        <normal>0.0, -1.0, 0.0</normal>
+
+        <!-- UVs two floats for each vertex -->
+        <uv>0.0, 0.0, 0.0, 0.625, 0.025, 0.625, 0.025, 0.0</uv>
+
+        <!--
+          Optional. Faces with the same shade-group are shaded smooth,
+          unless, there is no vertex normals defined.
+
+          By default all faces shaded flat
+        -->
+        <shade-group>0</shade-group>
+
+        <!-- Three floats per vertex -->
+        <vtx-normals></vtx-normals>
+
+        <!-- Overwrite mesh material for a face-->
+        <material></material>
+
+      </face>
+
+      <face id="2"> <!-- next face --> </face>
+
+    </Mesh>
+  </lod>
+
 </osm3d>
